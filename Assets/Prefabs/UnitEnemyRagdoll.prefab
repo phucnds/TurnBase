@@ -10,8 +10,13 @@ PrefabInstance:
     - target: {fileID: 2088600078684998909, guid: 2138edfc7ad3c394e8e19572f15c3843,
         type: 3}
       propertyPath: m_Name
-      value: UnitRagdoll
+      value: UnitEnemyRagdoll
       objectReference: {fileID: 0}
+    - target: {fileID: 6857423490597672646, guid: 2138edfc7ad3c394e8e19572f15c3843,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7d22fc6b9a431b043a917fb89a80bcfc, type: 2}
     - target: {fileID: 6965472236796064385, guid: 2138edfc7ad3c394e8e19572f15c3843,
         type: 3}
       propertyPath: m_RootOrder
