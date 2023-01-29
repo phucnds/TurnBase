@@ -9,7 +9,7 @@ public class ShootAction : BaseAction
 
     public event EventHandler<OnShootEventArgs> onShoot;
 
-    public class OnShootEventArgs: EventArgs
+    public class OnShootEventArgs : EventArgs
     {
         public Unit targetUnit;
         public Unit shootUnit;
@@ -28,9 +28,11 @@ public class ShootAction : BaseAction
     private Unit targetUnit;
     private bool canShootBullet;
 
-    private void Update() 
+    [SerializeField] private LayerMask obstaclesLayerMark;
+
+    private void Update()
     {
-        if(!isActive) return;
+        if (!isActive) return;
 
         stateTimer -= Time.deltaTime;
 
@@ -43,7 +45,7 @@ public class ShootAction : BaseAction
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(aimDir), rotateSpeed * Time.deltaTime);
                 break;
             case State.Shooting:
-                if(canShootBullet)
+                if (canShootBullet)
                 {
                     Shoot();
                     canShootBullet = false;
@@ -61,7 +63,8 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
-        onShoot?.Invoke(this, new OnShootEventArgs{
+        onShoot?.Invoke(this, new OnShootEventArgs
+        {
             targetUnit = this.targetUnit,
             shootUnit = this.unit
         });
@@ -71,7 +74,7 @@ public class ShootAction : BaseAction
 
     private void NextState()
     {
-        switch(state)
+        switch (state)
         {
             case State.Amiming:
                 state = State.Shooting;
@@ -105,7 +108,7 @@ public class ShootAction : BaseAction
     {
         List<GridPostition> validGridPositionList = new List<GridPostition>();
 
-        
+
 
         for (int x = -maxShootDistance; x <= maxShootDistance; x++)
         {
@@ -117,12 +120,21 @@ public class ShootAction : BaseAction
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
 
                 int testDistance = Mathf.Abs(x) + Mathf.Abs(z);
-                if(testDistance > maxShootDistance) continue;
+                if (testDistance > maxShootDistance) continue;
 
                 if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) continue;
 
                 Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
-                if(targetUnit.IsEnemy() == unit.IsEnemy()) continue;
+                if (targetUnit.IsEnemy() == unit.IsEnemy()) continue;
+
+                Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                Vector3 shootDir = (targetUnit.GetWorldPostition() - unitWorldPosition).normalized;
+                float unitShoulderHeight = 1.7f;
+
+                if (Physics.Raycast(unitWorldPosition + Vector3.up * unitShoulderHeight,
+                    shootDir,
+                    Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPostition()),
+                    obstaclesLayerMark)) continue;
 
                 validGridPositionList.Add(testGridPosition);
             }
@@ -134,7 +146,7 @@ public class ShootAction : BaseAction
     public override void TakeAction(GridPostition gridPostition, Action onActionComplete)
     {
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPostition);
-       
+
         state = State.Amiming;
         float amimingStateTime = 1f;
         stateTimer = amimingStateTime;

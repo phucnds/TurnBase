@@ -81,7 +81,7 @@ public class GridSystemVisual : MonoBehaviour
         {
             for (int z = -range; z <= range; z++)
             {
-                GridPostition testGridPosition = new GridPostition(x,z);
+                GridPostition testGridPosition = new GridPostition(x, z);
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
 
@@ -92,7 +92,7 @@ public class GridSystemVisual : MonoBehaviour
             }
         }
 
-        ShowGridPositionList(gridPostitionList,gridVisualType);
+        ShowGridPositionList(gridPostitionList, gridVisualType);
     }
 
     public void ShowGridPositionList(List<GridPostition> gridPostitionsList, GridVisualType gridVisualType)
@@ -125,7 +125,7 @@ public class GridSystemVisual : MonoBehaviour
             case ShootAction shootAction:
                 gridVisualType = GridVisualType.Red;
 
-                ShowGridPositionRange(selectedUnit.GetGridPostition(),shootAction.GetMaxShootDistance(), GridVisualType.RedSoft);
+                ShowGridPositionRange(selectedUnit.GetGridPostition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft);
                 break;
         }
 
