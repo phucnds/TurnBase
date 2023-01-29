@@ -69,6 +69,9 @@
      <Compile Include="Assets\Scripts\LookAtCamera.cs" />
      <Compile Include="Assets\Scripts\UnitRagdollSpawner.cs" />
      <Compile Include="Assets\Scripts\EnemyAIAction.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding.cs" />
+     <Compile Include="Assets\Scripts\PathNode.cs" />
+     <Compile Include="Assets\Scripts\PathfindDebugObject.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\PolygonPrototype\Shaders\Prototype_Glass_Global.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
