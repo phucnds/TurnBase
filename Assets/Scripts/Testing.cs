@@ -9,7 +9,6 @@ public class Testing : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
 
-            Debug.Log("T");
             GridPostition mouseGridPosition = LevelGrid.Instance.GetGridPostition(MouseWorld.GetPosition());
             GridPostition startGridPosition = new GridPostition(0, 0);
 
