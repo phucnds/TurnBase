@@ -21,7 +21,7 @@ public class LevelGrid : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        gridSystem = new GridSystem<GridObject>(width, height, cellSize, (GridSystem<GridObject> g, GridPostition gridPostition) => new GridObject( g, gridPostition));
+        gridSystem = new GridSystem<GridObject>(width, height, cellSize, (GridSystem<GridObject> g, GridPosition gridPostition) => new GridObject( g, gridPostition));
         //gridSystem.CreateDebugObjects(gridDebugPrefab);
     }
 
@@ -29,48 +29,48 @@ public class LevelGrid : MonoBehaviour
         Pathfinding.Instance.Setup(width,height,cellSize);
     }
 
-    public void AddUnitAtGridPosition(GridPostition gridPostition, Unit unit)
+    public void AddUnitAtGridPosition(GridPosition gridPostition, Unit unit)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPostition);
         gridObject.AddUnit(unit);
     }
 
-    public List<Unit> GetListUnitAtGridPosition(GridPostition gridPostition)
+    public List<Unit> GetListUnitAtGridPosition(GridPosition gridPostition)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPostition);
         return gridObject.GetListUnit();
     }
 
-    public void RemoveUnitAtGridPosition(GridPostition gridPostition, Unit unit)
+    public void RemoveUnitAtGridPosition(GridPosition gridPostition, Unit unit)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPostition);
         gridObject.RemoveUnit(unit);
     }
 
-    public void UnitMovedGridPostion(Unit unit, GridPostition fromGridPosition, GridPostition toGridPosition)
+    public void UnitMovedGridPostion(Unit unit, GridPosition fromGridPosition, GridPosition toGridPosition)
     {
         RemoveUnitAtGridPosition(fromGridPosition, unit);
         AddUnitAtGridPosition(toGridPosition, unit);
         OnAnyUnitMovedGridPosition?.Invoke();
     }
 
-    public GridPostition GetGridPostition(Vector3 worldPosition) => gridSystem.GetGridPostition(worldPosition);
+    public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition);
 
-    public Vector3 GetWorldPosition(GridPostition gridPosition) => gridSystem.GetWorldPosition(gridPosition);
+    public Vector3 GetWorldPosition(GridPosition gridPosition) => gridSystem.GetWorldPosition(gridPosition);
 
-    public bool IsValidGridPosition(GridPostition gridPostition) => gridSystem.IsValidGridPosition(gridPostition);
+    public bool IsValidGridPosition(GridPosition gridPostition) => gridSystem.IsValidGridPosition(gridPostition);
 
     public int GetWidth() => gridSystem.GetWidth();
 
     public int GetHeight() => gridSystem.GetHeight();
 
-    public bool HasAnyUnitOnGridPosition(GridPostition gridPostition)
+    public bool HasAnyUnitOnGridPosition(GridPosition gridPostition)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPostition);
         return gridObject.HasAnyUnit();
     }
 
-    public Unit GetUnitAtGridPosition(GridPostition gridPostition)
+    public Unit GetUnitAtGridPosition(GridPosition gridPostition)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPostition);
         return gridObject.GetUnit();

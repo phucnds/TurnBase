@@ -104,15 +104,15 @@ public class ShootAction : BaseAction
         return "Shoot";
     }
 
-    public override List<GridPostition> GetValidActionGridPositionList()
+    public override List<GridPosition> GetValidActionGridPositionList()
     {
-        GridPostition unitGridPosition = unit.GetGridPostition();
+        GridPosition unitGridPosition = unit.GetGridPosition();
         return GetValidActionGridPositionList(unitGridPosition);
     }
 
-    public List<GridPostition> GetValidActionGridPositionList(GridPostition unitGridPosition)
+    public List<GridPosition> GetValidActionGridPositionList(GridPosition unitGridPosition)
     {
-        List<GridPostition> validGridPositionList = new List<GridPostition>();
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
 
 
 
@@ -120,8 +120,8 @@ public class ShootAction : BaseAction
         {
             for (int z = -maxShootDistance; z <= maxShootDistance; z++)
             {
-                GridPostition offsetGridPostition = new GridPostition(x, z);
-                GridPostition testGridPosition = unitGridPosition + offsetGridPostition;
+                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
 
@@ -149,9 +149,9 @@ public class ShootAction : BaseAction
         return validGridPositionList;
     }
 
-    public override void TakeAction(GridPostition gridPostition, Action onActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPostition);
+        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
         state = State.Amiming;
         float amimingStateTime = 1f;
@@ -172,20 +172,20 @@ public class ShootAction : BaseAction
         return maxShootDistance;
     }
 
-    public override EnemyAIAction GetEnemyAIAction(GridPostition gridPostition)
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
-        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPostition);
+        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
 
         return new EnemyAIAction
         {
-            gridPostition = gridPostition,
+            gridPosition = gridPosition,
             actionValue = 100 + Mathf.RoundToInt((1 - targetUnit.GetHealthNormalized()) * 100f)
         };
     }
 
-    public int GetTargetCountAtPosition(GridPostition gridPostition)
+    public int GetTargetCountAtPosition(GridPosition gridPosition)
     {
-        return GetValidActionGridPositionList(gridPostition).Count;
+        return GetValidActionGridPositionList(gridPosition).Count;
     }
 }

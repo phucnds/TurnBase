@@ -21,25 +21,25 @@ public class GrenadeAction : BaseAction
         return "Grenade";
     }
 
-    public override EnemyAIAction GetEnemyAIAction(GridPostition gridPostition)
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
         return new EnemyAIAction {
-            gridPostition = gridPostition,
+            gridPosition = gridPosition,
             actionValue = 0
         };
     }
 
-    public override List<GridPostition> GetValidActionGridPositionList()
+    public override List<GridPosition> GetValidActionGridPositionList()
     {
-        List<GridPostition> validGridPositionList = new List<GridPostition>();
-        GridPostition unitGridPosition = unit.GetGridPostition();
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
+        GridPosition unitGridPosition = unit.GetGridPosition();
 
         for (int x = -maxThrowDistance; x <= maxThrowDistance; x++)
         {
             for (int z = -maxThrowDistance; z <= maxThrowDistance; z++)
             {
-                GridPostition offsetGridPostition = new GridPostition(x, z);
-                GridPostition testGridPosition = unitGridPosition + offsetGridPostition;
+                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
 
@@ -53,11 +53,11 @@ public class GrenadeAction : BaseAction
         return validGridPositionList;
     }
 
-    public override void TakeAction(GridPostition gridPostition, Action onActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         Transform grenadeProjectileTransform = Instantiate(grenadeProjectilePrefab, unit.GetWorldPostition(), Quaternion.identity);
         GrenadeProjectile grenadeProjectile = grenadeProjectileTransform.GetComponent<GrenadeProjectile>();
-        grenadeProjectile.Setup(gridPostition, OnGrenadeBehaviourComplete);
+        grenadeProjectile.Setup(gridPosition, OnGrenadeBehaviourComplete);
 
         ActionStart(onActionComplete);
     }

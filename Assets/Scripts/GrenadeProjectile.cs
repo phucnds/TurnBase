@@ -43,6 +43,11 @@ public class GrenadeProjectile : MonoBehaviour
                 {
                     targetUnit.Damage(30);
                 }
+
+                if (collider.TryGetComponent<DestructibleCrate>(out DestructibleCrate destructibleCrate))
+                {
+                    destructibleCrate.Damage();
+                }
             }
 
             OnAnyGrenadeExploded?.Invoke();
@@ -56,7 +61,7 @@ public class GrenadeProjectile : MonoBehaviour
         }
     }
 
-    public void Setup(GridPostition gridPostition, Action onGrenadeBehaviourComplete)
+    public void Setup(GridPosition gridPostition, Action onGrenadeBehaviourComplete)
     {
         this.onGrenadeBehaviourComplete = onGrenadeBehaviourComplete;
         targetPosition = LevelGrid.Instance.GetWorldPosition(gridPostition);

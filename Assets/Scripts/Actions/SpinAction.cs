@@ -23,7 +23,7 @@ public class SpinAction : BaseAction
 
     }
 
-    public override void TakeAction(GridPostition gridPostition, Action onActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         totalSpinAmount = 0;
         ActionStart(onActionComplete);
@@ -34,10 +34,10 @@ public class SpinAction : BaseAction
         return "Spin";
     }
 
-    public override List<GridPostition> GetValidActionGridPositionList()
+    public override List<GridPosition> GetValidActionGridPositionList()
     {
-        GridPostition unitGridPosition = unit.GetGridPostition();
-        return new List<GridPostition>{
+        GridPosition unitGridPosition = unit.GetGridPosition();
+        return new List<GridPosition>{
             unitGridPosition
         };
     }
@@ -47,11 +47,11 @@ public class SpinAction : BaseAction
         return 1;
     }
 
-    public override EnemyAIAction GetEnemyAIAction(GridPostition gridPostition)
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
         return new EnemyAIAction
         {
-            gridPostition = gridPostition,
+            gridPosition = gridPosition,
             actionValue = 0
         };
     }

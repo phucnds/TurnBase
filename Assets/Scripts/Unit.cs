@@ -12,7 +12,7 @@ public class Unit : MonoBehaviour
     public static event UnityAction<Unit> OnAnyUnitSpawned;
     public static event UnityAction<Unit> OnAnyUnitDead;
 
-    private GridPostition gridPostition;
+    private GridPosition gridPosition;
     private HealthSystem healthSystem;
     private MoveAction moveAction;
     private SpinAction spinAction;
@@ -34,8 +34,8 @@ public class Unit : MonoBehaviour
 
     private void Start() 
     {
-        gridPostition = LevelGrid.Instance.GetGridPostition(transform.position);
-        LevelGrid.Instance.AddUnitAtGridPosition(gridPostition,this);
+        gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        LevelGrid.Instance.AddUnitAtGridPosition(gridPosition,this);
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
         healthSystem.OnDead += healthSystem_OnDead;
 
@@ -45,18 +45,18 @@ public class Unit : MonoBehaviour
     private void Update()
     {
 
-        GridPostition newGridPostition = LevelGrid.Instance.GetGridPostition(transform.position);
-        if(gridPostition != newGridPostition)
+        GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        if(gridPosition != newGridPosition)
         {
-            GridPostition oldGridPosition = gridPostition;
-            gridPostition = newGridPostition;
-            LevelGrid.Instance.UnitMovedGridPostion(this, oldGridPosition, newGridPostition);
+            GridPosition oldGridPosition = gridPosition;
+            gridPosition = newGridPosition;
+            LevelGrid.Instance.UnitMovedGridPostion(this, oldGridPosition, newGridPosition);
         }
     }
 
     private void healthSystem_OnDead()
     {
-        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPostition,this);
+        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition,this);
         Destroy(gameObject);
         OnAnyUnitDead?.Invoke(this);
     }
@@ -81,9 +81,9 @@ public class Unit : MonoBehaviour
         return null;
     }
 
-    public GridPostition GetGridPostition()
+    public GridPosition GetGridPosition()
     {
-        return gridPostition;
+        return gridPosition;
     }
 
     public Vector3 GetWorldPostition()

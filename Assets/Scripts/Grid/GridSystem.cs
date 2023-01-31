@@ -10,7 +10,7 @@ public class GridSystem<TGridObject>
     private float cellSize;
     private TGridObject[,] gridObjectArray;
 
-    public GridSystem(int width, int height, float cellSize, Func<GridSystem<TGridObject>, GridPostition, TGridObject> createGridObject)
+    public GridSystem(int width, int height, float cellSize, Func<GridSystem<TGridObject>, GridPosition, TGridObject> createGridObject)
     {
         this.width = width;
         this.height = height;
@@ -22,22 +22,22 @@ public class GridSystem<TGridObject>
         {
             for (int z = 0; z < height; z++)
             {
-                GridPostition gridPostition = new GridPostition(x, z);
-                gridObjectArray[x, z] = createGridObject(this, gridPostition);
+                GridPosition gridPosition = new GridPosition(x, z);
+                gridObjectArray[x, z] = createGridObject(this, gridPosition);
             }
         }
 
 
     }
 
-    public Vector3 GetWorldPosition(GridPostition gridPostition)
+    public Vector3 GetWorldPosition(GridPosition gridPostition)
     {
         return new Vector3(gridPostition.x, 0, gridPostition.z) * cellSize;
     }
 
-    public GridPostition GetGridPostition(Vector3 worldposition)
+    public GridPosition GetGridPosition(Vector3 worldposition)
     {
-        return new GridPostition(
+        return new GridPosition(
             Mathf.RoundToInt(worldposition.x / cellSize),
             Mathf.RoundToInt(worldposition.z / cellSize)
         );
@@ -49,7 +49,7 @@ public class GridSystem<TGridObject>
         {
             for (int z = 0; z < height; z++)
             {
-                GridPostition gridPostition = new GridPostition(x,z);
+                GridPosition gridPostition = new GridPosition(x,z);
 
                 Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPostition), Quaternion.identity);
                 GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
@@ -59,12 +59,12 @@ public class GridSystem<TGridObject>
         }
     }
 
-    public TGridObject GetGridObject(GridPostition gridPostition)
+    public TGridObject GetGridObject(GridPosition gridPostition)
     {
         return gridObjectArray[gridPostition.x, gridPostition.z];
     }
 
-    public bool IsValidGridPosition(GridPostition gridPostition)
+    public bool IsValidGridPosition(GridPosition gridPostition)
     {
         return gridPostition.x >= 0 &&
                gridPostition.z >= 0 &&

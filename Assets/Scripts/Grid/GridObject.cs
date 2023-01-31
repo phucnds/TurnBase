@@ -5,13 +5,13 @@ using UnityEngine;
 public class GridObject 
 {
     private GridSystem<GridObject> gridSystem;
-    private GridPostition gridPostition;
+    private GridPosition gridPosition;
     private List<Unit> units;
 
-    public GridObject(GridSystem<GridObject> gridSystem, GridPostition gridPostition)
+    public GridObject(GridSystem<GridObject> gridSystem, GridPosition gridPosition)
     {
         this.gridSystem = gridSystem;
-        this.gridPostition = gridPostition;
+        this.gridPosition = gridPosition;
         units = new List<Unit>();
     }
 
@@ -23,7 +23,7 @@ public class GridObject
         {
             unitString += unit + "\n";
         }
-        return gridPostition.ToString() + "\n" + unitString;
+        return gridPosition.ToString() + "\n" + unitString;
     }
 
     public void AddUnit(Unit unit)

@@ -18,15 +18,15 @@ public abstract class BaseAction : MonoBehaviour
     }
 
     public abstract string GetActionName();
-    public abstract void TakeAction(GridPostition gridPostition, Action onActionComplete);
+    public abstract void TakeAction(GridPosition gridPosition, Action onActionComplete);
 
-    public virtual bool IsValidActionGridPosition(GridPostition gridPostition)
+    public virtual bool IsValidActionGridPosition(GridPosition gridPosition)
     {
-        List<GridPostition> validActionGridPosition = GetValidActionGridPositionList();
-        return validActionGridPosition.Contains(gridPostition);
+        List<GridPosition> validActionGridPosition = GetValidActionGridPositionList();
+        return validActionGridPosition.Contains(gridPosition);
     }
 
-    public abstract List<GridPostition> GetValidActionGridPositionList();
+    public abstract List<GridPosition> GetValidActionGridPositionList();
 
     public virtual int GetActionPointsCost()
     {
@@ -55,11 +55,11 @@ public abstract class BaseAction : MonoBehaviour
     public EnemyAIAction GetBestEnemyAIAction()
     {
         List<EnemyAIAction> enemyAIActionList = new List<EnemyAIAction>();
-        List<GridPostition> validActionGridPositionList = GetValidActionGridPositionList();
+        List<GridPosition> validActionGridPositionList = GetValidActionGridPositionList();
 
-        foreach (GridPostition gridPostition in validActionGridPositionList)
+        foreach (GridPosition gridPosition in validActionGridPositionList)
         {
-            EnemyAIAction enemyAIAction = GetEnemyAIAction(gridPostition);
+            EnemyAIAction enemyAIAction = GetEnemyAIAction(gridPosition);
             enemyAIActionList.Add(enemyAIAction);
         }
 
@@ -74,6 +74,6 @@ public abstract class BaseAction : MonoBehaviour
         }
     }
 
-    public abstract EnemyAIAction GetEnemyAIAction(GridPostition gridPostition);
+    public abstract EnemyAIAction GetEnemyAIAction(GridPosition gridPosition);
     
 }

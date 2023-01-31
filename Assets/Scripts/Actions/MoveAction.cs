@@ -48,18 +48,18 @@ public class MoveAction : BaseAction
 
 
 
-    public override List<GridPostition> GetValidActionGridPositionList()
+    public override List<GridPosition> GetValidActionGridPositionList()
     {
-        List<GridPostition> validGridPositionList = new List<GridPostition>();
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
 
-        GridPostition unitGridPosition = unit.GetGridPostition();
+        GridPosition unitGridPosition = unit.GetGridPosition();
 
         for (int x = -maxMoveDistance; x <= maxMoveDistance; x++)
         {
             for (int z = -maxMoveDistance; z <= maxMoveDistance; z++)
             {
-                GridPostition offsetGridPostition = new GridPostition(x, z);
-                GridPostition testGridPosition = unitGridPosition + offsetGridPostition;
+                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
                 if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
                 if (unitGridPosition == testGridPosition) continue;
@@ -76,14 +76,14 @@ public class MoveAction : BaseAction
         return validGridPositionList;
     }
 
-    public override void TakeAction(GridPostition gridPostition, Action onActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        List<GridPostition> pathGridPostitionList = Pathfinding.Instance.FindPath(unit.GetGridPostition(), gridPostition, out int pathLength);
+        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(unit.GetGridPosition(), gridPosition, out int pathLength);
 
         currentPositionIndex = 0;
         positionList = new List<Vector3>();
 
-        foreach (GridPostition pathGridPosition in pathGridPostitionList)
+        foreach (GridPosition pathGridPosition in pathGridPositionList)
         {
             positionList.Add(LevelGrid.Instance.GetWorldPosition(pathGridPosition));
         }
@@ -97,14 +97,14 @@ public class MoveAction : BaseAction
         return "Move";
     }
 
-    public override EnemyAIAction GetEnemyAIAction(GridPostition gridPostition)
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
 
-        int targetCountAtPosition = unit.GetAction<ShootAction>().GetTargetCountAtPosition(gridPostition);
+        int targetCountAtPosition = unit.GetAction<ShootAction>().GetTargetCountAtPosition(gridPosition);
 
         return new EnemyAIAction
         {
-            gridPostition = gridPostition,
+            gridPosition = gridPosition,
             actionValue = targetCountAtPosition * 10
         };
     }

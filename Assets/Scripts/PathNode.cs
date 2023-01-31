@@ -9,13 +9,13 @@ public class PathNode
     private int hCost;
     private int fCost;
 
-    private GridPostition gridPostition;
+    private GridPosition gridPostition;
     private PathNode cameFromPathNode;
 
     private bool isWalkable = true;
 
 
-    public PathNode(GridPostition gridPostition)
+    public PathNode(GridPosition gridPostition)
     {
         this.gridPostition = gridPostition;
     }
@@ -73,7 +73,7 @@ public class PathNode
         return cameFromPathNode;
     }
 
-    public GridPostition GetGridPosition()
+    public GridPosition GetGridPosition()
     {
         return gridPostition;
     }
