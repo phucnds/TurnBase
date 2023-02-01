@@ -22,7 +22,7 @@ public class GridSystemVisual : MonoBehaviour
         Red,
         RedSoft,
         Yellow,
-
+        YellowSoft,
     }
 
     [SerializeField] private Transform gridSystemVisualSinglePrefab;
@@ -146,11 +146,14 @@ public class GridSystemVisual : MonoBehaviour
 
                 ShowGridPositionRange(selectedUnit.GetGridPosition(), shootAction.GetMaxShootDistance(), GridVisualType.RedSoft);
                 break;
+            case GrenadeAction grenadeAction:
+                gridVisualType = GridVisualType.Yellow;
+                break;
 
             case SwordAction swordAction:
                 gridVisualType = GridVisualType.Red;
 
-                ShowGridPositionRange(selectedUnit.GetGridPosition(), swordAction.GetMaxSwordDistance(), GridVisualType.RedSoft);
+                ShowGridPositionRangeSquare(selectedUnit.GetGridPosition(), swordAction.GetMaxSwordDistance(), GridVisualType.RedSoft);
                 break;
         }
 
