@@ -26,31 +26,11 @@ public class CameraController : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector3 inputMoveDir = Vector3.zero;
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            inputMoveDir.z = 1f;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            inputMoveDir.z = -1f;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            inputMoveDir.x = -1f;
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            inputMoveDir.x = 1f;
-        }
+        Vector3 inputMoveDir = InputManager.Instance.GetCameraMoveVector();
 
         float moveSpeed = 5f;
 
-        Vector3 moveVector = transform.forward * inputMoveDir.z + transform.right * inputMoveDir.x;
+        Vector3 moveVector = transform.forward * inputMoveDir.y + transform.right * inputMoveDir.x;
         transform.position += moveVector * moveSpeed * Time.deltaTime;
     }
 
@@ -58,15 +38,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 rotationVector = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.Q))
-        {
-            rotationVector.y = 1f;
-        }
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            rotationVector.y = -1f;
-        }
+        rotationVector.y = InputManager.Instance.GetCameraRotateAmount();
 
         float rotationSpeed = 100f;
         transform.eulerAngles += rotationVector * rotationSpeed * Time.deltaTime;
@@ -74,17 +46,9 @@ public class CameraController : MonoBehaviour
 
     private void HandleZoom()
     {
-        float zoomAmount = 1f;
+        float zoomIncreaseAmount = 1f;
 
-        if (Input.mouseScrollDelta.y > 0)
-        {
-            targetFollowOffset.y -= zoomAmount;
-        }
-
-        if (Input.mouseScrollDelta.y < 0)
-        {
-            targetFollowOffset.y += zoomAmount;
-        }
+        targetFollowOffset.y += InputManager.Instance.GetCameraZoomAmout() * zoomIncreaseAmount;
 
         float zoomSpeed = 5f;
         targetFollowOffset.y = Mathf.Clamp(targetFollowOffset.y, MIN_FOLLOW_Y_OFFSET, MAX_FOLLOW_Y_OFFSET);
